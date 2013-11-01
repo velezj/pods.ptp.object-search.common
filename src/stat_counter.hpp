@@ -4,6 +4,7 @@
 
 #include <iosfwd>
 #include <boost/mpl/vector.hpp>
+#include <vector>
 
 // Description:
 // The __P2L_COMMON_stat_counter_possible_types__
@@ -35,7 +36,7 @@ namespace p2l { namespace common {
     // vector
     template< typename T >
     void collect_stats( const std::string& id,
-			std::vector< T >& vec );
+			T& vec );
     
     // Description:
     // Returns a list of all known stat ids

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <vector>
+#include <algorithm>
 #include <boost/variant.hpp>
 
 namespace p2l { namespace common {
@@ -26,6 +27,7 @@ namespace p2l { namespace common {
     //====================================================================
 
     template< typename T >
+    void 
     log_stat( const std::string& id,
 	      const T& stat )
     {
@@ -46,7 +48,7 @@ namespace p2l { namespace common {
     {
       std::vector<std::string> ids;
       for( auto iter : _g_global_stat_map ) {
-	ids.push_back( iter->first );
+	ids.push_back( iter.first );
       }
       return ids;
     }
@@ -62,10 +64,10 @@ namespace p2l { namespace common {
 
       std::vector<variant_t> stats = _g_global_stat_map[ id ];
       os << "[";
-      for( auto iter : stats ) {
-	os << (*iter);
-	if( iter + 1 != stats.end() ) {
-	  oss << ",";
+      for( size_t i = 0; i < stats.size(); ++i) {
+	os << stats[i];
+	if( i + 1 < stats.size() ) {
+	  os << ",";
 	}
       }
       os << "]";
@@ -79,13 +81,17 @@ namespace p2l { namespace common {
     {
     public:
 
-      std::vector< Vec_T > _vec;
-      stat_collect_visitor( std::vector< Vec_T >& v )
+      Vec_T& _vec;
+      stat_collect_visitor( Vec_T& v )
 	: _vec( v )
       {}
 
-      template< typename T >
-      void operator( T& op ) {
+      template<typename T>
+      void operator() ( T& op ) {
+	// no-op for default types
+      }
+
+      void operator() ( typename Vec_T::value_type& op ) {
 	_vec.push_back( op );
       }
     };
@@ -94,14 +100,14 @@ namespace p2l { namespace common {
 
     template< typename Vec_T >
     void collect_stats( const std::string& id ,
-			std::vector< Vec_T >& vec )
+			Vec_T& vec )
     {
       if( _g_global_stat_map.find( id ) == _g_global_stat_map.end() ) {
 	return;
       }
       
       std::vector<variant_t> stats = _g_global_stat_map[ id ];
-      stat_collect_visitor<Vec_T> v(vec);
+      stat_collect_visitor<Vec_T> v( vec );
       std::for_each( stats.begin(), stats.end(),
 		     boost::apply_visitor( v ) );
     }
