@@ -1,7 +1,8 @@
 #include <p2l-common/stat_counter.hpp>
 #include <iostream>
 
-
+using namespace p2l;
+using namespace p2l::common;
 
 int main( int argc, char** argv )
 {
@@ -16,7 +17,7 @@ int main( int argc, char** argv )
   std::vector< std::string > ids = known_stat_ids();
   std::cout << "known stats: ";
   for( auto iter : ids ) {
-    std::cout << *iter << ", ";
+    std::cout << iter << ", ";
   }
   std::cout << std::endl;
 
@@ -30,7 +31,7 @@ int main( int argc, char** argv )
   collect_stats( "stat.b", stat_b );
   std::cout << "stat.b (collected) = ";
   for( auto iter : stat_b ) {
-    std::cout << *iter << ",";
+    std::cout << iter << ",";
   }
   std::cout << std::endl;
 }
