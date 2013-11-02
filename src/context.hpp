@@ -13,7 +13,7 @@
 
 // Description:
 // Pushes the current function name into the context stack
-#define P2L_COMMON_push_function_context() scoped_context_stack_push __p2l_common_function_context_stack_push( context_t( __FUNCTION__ ) )
+#define P2L_COMMON_push_function_context() p2l::common::scoped_context_stack_push __p2l_common_function_context_stack_push( p2l::common::context_t( __FUNCTION__ ) )
 
 
 //=================================================================

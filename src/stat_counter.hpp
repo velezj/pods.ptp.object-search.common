@@ -23,10 +23,10 @@
 // Description:
 // Logs the given stat, adding the current context stack identifier to 
 // the given stat id
-#define STAT( id, stat )			\
-  do { std::ostringstream oss;			\
-    oss << context_stack_id() << "/" << id;	\
-    log_stat( oss.str(), stat );		\
+#define STAT( id, stat )					\
+  do { std::ostringstream oss;					\
+    oss << p2l::common::context_stack_id() << "/" << id;	\
+    p2l::common::log_stat( oss.str(), stat );			\
   } while( false )
 
 
