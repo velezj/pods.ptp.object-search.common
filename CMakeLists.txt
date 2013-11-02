@@ -19,7 +19,7 @@ endif (USE_PEDANTIC)
 add_library( p2l-common SHARED
   src/context.cpp
   )
-pods_use_pkg_config_packages(p2l-common boost-1.54.0 )
+pods_use_pkg_config_packages(p2l-common boost-1.54.0 boost-1.54.0-log )
 pods_install_libraries( p2l-common )
 pods_install_headers(
     src/gcc_diagnostics.hpp

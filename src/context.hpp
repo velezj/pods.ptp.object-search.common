@@ -5,7 +5,19 @@
 
 #include <string>
 #include <fstream>
+#include <sstream>
 #include <boost/optional.hpp>
+
+
+//=================================================================
+
+// Description:
+// Pushes the current function name into the context stack
+#define P2L_COMMON_push_function_context() scoped_context_stack_push __p2l_common_function_context_stack_push( context_t( __FUNCTION__ ) )
+
+
+//=================================================================
+
 
 namespace p2l { namespace common {
 
@@ -46,7 +58,10 @@ namespace p2l { namespace common {
     // Returns a new filename prepended with the current context
     // and with the given name
     std::string context_filename( const std::string& name );
-    
+
+    // Description:
+    // Returns a string identifier for the entire context stack
+    std::string context_stack_id();
     
     // Description:
     // A scoped context switch.
