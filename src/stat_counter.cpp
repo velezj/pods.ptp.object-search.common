@@ -1,6 +1,4 @@
 
-#include "stat_counter.hpp"
-
 #include <iostream>
 #include <unordered_map>
 #include <vector>
@@ -22,7 +20,7 @@ namespace p2l { namespace common {
     // Description:
     // THe global map of stat ids to vector of logged stats
     typedef std::unordered_map< std::string, std::vector< variant_t > > stat_map_t;
-    static stat_map_t _g_global_stat_map;
+    extern stat_map_t _g_global_stat_map;
 
     //====================================================================
 
@@ -41,37 +39,6 @@ namespace p2l { namespace common {
       _g_global_stat_map[ id ].push_back( stat_v );
     }
 
-    //====================================================================
-
-    std::vector<std::string>
-    known_stat_ids()
-    {
-      std::vector<std::string> ids;
-      for( auto iter : _g_global_stat_map ) {
-	ids.push_back( iter.first );
-      }
-      return ids;
-    }
-
-    //====================================================================
-
-    void print_stats( const std::string& id,
-		      std::ostream& os)
-    {
-      if( _g_global_stat_map.find( id ) == _g_global_stat_map.end() ) {
-	return;
-      }
-
-      std::vector<variant_t> stats = _g_global_stat_map[ id ];
-      os << "[";
-      for( size_t i = 0; i < stats.size(); ++i) {
-	os << stats[i];
-	if( i + 1 < stats.size() ) {
-	  os << ",";
-	}
-      }
-      os << "]";
-    }
 
     //====================================================================
 
@@ -112,19 +79,6 @@ namespace p2l { namespace common {
 		     boost::apply_visitor( v ) );
     }
 
-    //====================================================================
-
-    void print_all_stats( std::ostream& os )
-    {
-      os << "{";
-      os << "\"stats\" : {";
-      for( auto id : known_stat_ids() ) {
-	os << "\"" << id << "\" : ";
-	print_stats( id, os );
-	os << ",";
-      }
-      os << "}}";
-    }
 
     //====================================================================
     //====================================================================

@@ -18,6 +18,7 @@ endif (USE_PEDANTIC)
 # the common library 
 add_library( p2l-common SHARED
   src/context.cpp
+  src/stat_counter_impl.cpp
   )
 pods_use_pkg_config_packages(p2l-common boost-1.54.0 boost-1.54.0-log )
 pods_install_libraries( p2l-common )
