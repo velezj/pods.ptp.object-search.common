@@ -7,13 +7,17 @@
 #include <fstream>
 #include <sstream>
 #include <boost/optional.hpp>
+#include "stat_counter.hpp"
+#include <boost/chrono.hpp>
 
 
 //=================================================================
 
 // Description:
 // Pushes the current function name into the context stack
-#define P2L_COMMON_push_function_context() p2l::common::scoped_context_stack_push __p2l_common_function_context_stack_push( p2l::common::context_t( __FUNCTION__ ) )
+// #define P2L_COMMON_push_function_context() p2l::common::scoped_context_stack_push __p2l_common_function_context_stack_push( p2l::common::context_t( __FUNCTION__ ) )
+
+#define P2L_COMMON_push_function_context() 
 
 
 //=================================================================
@@ -70,12 +74,20 @@ namespace p2l { namespace common {
     class scoped_context_stack_push
     {
     public:
+      boost::chrono::steady_clock::time_point start_time;
       scoped_context_stack_push( const boost::optional<context_t>& new_context )
       {
+	start_time = boost::chrono::steady_clock::now();
 	push_context( new_context );
       }
       virtual ~scoped_context_stack_push()
       {
+	boost::chrono::steady_clock::time_point stop_time = 
+	  boost::chrono::steady_clock::now();
+	double seconds = ( stop_time - start_time ).count() * 
+	  ( (double)boost::chrono::steady_clock::period::num /
+	    boost::chrono::steady_clock::period::den );
+	STAT_LVL( info, "profile.seconds", seconds );
 	pop_context();
       }
     };

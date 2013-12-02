@@ -14,6 +14,8 @@ namespace p2l { namespace common {
 
     stat_map_t _g_global_stat_map;
 
+    static stat_level _g_stat_level_threshold = stat_level::info;
+
     //====================================================================
 
     std::vector<std::string>
@@ -51,14 +53,35 @@ namespace p2l { namespace common {
     void print_all_stats( std::ostream& os )
     {
       os << "{";
-      os << "\"stats\" : {";
+      os << "\"stats\" : {" << std::endl;
       for( auto id : known_stat_ids() ) {
 	os << "\"" << id << "\" : ";
 	print_stats( id, os );
 	os << ",";
+	os << std::endl;
       }
       os << "}}";
     }
+
+    //====================================================================
+
+    stat_level stat_level_threshold()
+    {
+      return _g_stat_level_threshold;
+    }
+
+    //====================================================================
+
+    void set_stat_level_threshold( const stat_level& lvl )
+    {
+      _g_stat_level_threshold = lvl;
+    }
+
+    //====================================================================
+    //====================================================================
+    //====================================================================
+    //====================================================================
+
 
   }
 }
