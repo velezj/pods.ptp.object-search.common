@@ -1,6 +1,6 @@
 
 #define BOOST_LOG_DYN_LINK 1
-#include <p2l-common/logging.hpp>
+#include <object-search.common/logging.hpp>
 #include <iostream>
 
 using namespace p2l;

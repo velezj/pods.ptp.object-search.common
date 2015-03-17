@@ -1,6 +1,6 @@
 
 #define __P2L_COMMON_stat_counter_possible_types__ boost::mpl::vector< std::string, double >
-#include <p2l-common/stat_counter.hpp>
+#include <object-search.common/stat_counter.hpp>
 #include <iostream>
 
 using namespace p2l;

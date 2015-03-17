@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6.0)
 
 # pull in the pods macros. See cmake/pods.cmake for documentation
-set(POD_NAME p2l-common)
+set(POD_NAME object-search.common)
 include(cmake/pods.cmake)
 
 
@@ -16,13 +16,13 @@ endif (USE_PEDANTIC)
 
 
 # the common library 
-add_library( p2l-common SHARED
+add_library( object-search.common SHARED
   src/context.cpp
   src/stat_counter_impl.cpp
   src/plots.cpp
   )
-pods_use_pkg_config_packages(p2l-common boost-1.54.0 boost-1.54.0-chrono boost-1.54.0-system )
-pods_install_libraries( p2l-common )
+pods_use_pkg_config_packages(object-search.common boost-1.54.0 boost-1.54.0-chrono boost-1.54.0-system )
+pods_install_libraries( object-search.common )
 pods_install_headers(
     src/gcc_diagnostics.hpp
     src/stat_counter.hpp
@@ -31,10 +31,10 @@ pods_install_headers(
     src/simple_svg_1.0.0.hpp
     src/plots.hpp
     DESTINATION
-    p2l-common)
-pods_install_pkg_config_file( p2l-common
+    object-search.common)
+pods_install_pkg_config_file( object-search.common
     CFLAGS 
-    LIBS -lp2l-common
+    LIBS -lobject-search.common
     REQUIRES boost-1.54.0 boost-1.54.0-chrono boost-1.54.0-system
     VERSION 0.0.1 )
 
